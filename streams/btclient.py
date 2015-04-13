@@ -26,8 +26,8 @@ hachoir_config.quiet = True
 
 logger=logging.getLogger()
 
-VIDEO_EXTS={'.avi':'video/x-msvideo','.mp4':'video/mp4','.mkv':'video/x-matroska',
-            '.m4v':'video/mp4','.mov':'video/quicktime', '.mpg':'video/mpeg','.ogv':'video/ogg', 
+VIDEO_EXTS={'.avi':'video/x-msvideo','.mp4':'video/mp4',
+            '.mkv':'video/x-matroska','.m4v':'video/mp4','.mov':'video/uicktime', '.mpg':'video/mpeg','.ogv':'video/ogg', 
             '.ogg':'video/ogg', '.webm':'video/webm'}
 
 RANGE_RE=re.compile(r'bytes=(\d+)-')
