@@ -1,0 +1,29 @@
+body{
+	background: #FFF;
+	margin: 0px;
+	font-family: sans-serif;
+	font-size: 0.7em/1.3em;
+}
+
+#banner{
+	display: block;
+	height: 50px;
+	background: #3399FF;
+	padding: 0px;
+}
+
+#logo{
+	padding-left: 25%;
+	color: #FFF;
+	font-size: 300%;
+}
+
+#content{
+	display: block;
+	margin: 0px auto 20px;
+	text-align: center;
+}
+
+#searchResults{
+	padding-left: 25%;
+}

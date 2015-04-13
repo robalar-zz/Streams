@@ -59,3 +59,7 @@ target/
 #Sublime-text files
 *.sublime-project
 *.sublime-workspace
+
+#Directories created by program
+movies/
+config/
