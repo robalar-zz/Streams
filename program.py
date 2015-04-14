@@ -1,8 +1,10 @@
- #!/usr/bin/python
+ #!/usr/bin/python2.7
 import streams
 from streams import search
 from streams import btclient
 from streams import webserver
+
+from streams.providers import yts
 
 import tabulate
 import os
@@ -39,12 +41,13 @@ def main():
 try:
 	if __name__ == '__main__':
 
-		webserver.Init()
+		#webserver.Init()
 		#main()
 		#s = search.start_search('star wars', 1)
 		#print s.movies[0].torrents[0]
 
-		
+		prov = yts.YTS('YTS', 'www.yts.com')
+		prov.do_search('hey')
 		
 finally:
 		if streams.ENABLE_PROXY:

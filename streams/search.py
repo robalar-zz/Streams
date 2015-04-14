@@ -23,13 +23,35 @@ class _Search(object):
         movie_count (int): number of movies returned by the search.
         results_per_page (int): number of movies per page of the search.
         page_count (int): number of pages returned by the search.
-        movies (list of _movie): a parsed list of movies returned by the search.
+        movies (list of _Movie): a parsed list of movies returned by the 
+                                 search.
     """
 
     def Request(self, parameters):
 
         #setup request session
-        requests_session = requesocks.session()
+        #requests_session = requesocks.session()
+
+        results = []
+
+        for provider in providers.provider_list():
+
+            provider_results = []
+
+            try:
+                provider_results = provider.do_search()
+            except Exception as exc:
+                print exc
+                continue
+
+            
+            results
+
+
+
+
+
+
         #start request session
         try:
             request = requests_session.get(url=('https://yts.to/api/v2/'
@@ -41,6 +63,7 @@ class _Search(object):
             raise exc
         return r
 
+    # TODO (robalar): move to provider file
     def parse_data(self, raw_data):
         #read json data
         json_data = json.loads(raw_data.text)
@@ -51,20 +74,20 @@ class _Search(object):
         #strip away unnescicary data
         return json_data['data']
 
-    #remove? move to provider?
+    # TODO (robalar): move to provider file
     def populate_movie_list(self, data):
         for m in data['movies']:
             if m['state'] == 'DMCA Removed':
                 return
-            else:
-                movie_object = movie.create_movie(title=m['title'],
-                                                  genres=m['genres'],
-                                                  torrents=m['torrents'],
-                                                  url=m['url'],
-                                                  rating=m['rating'],
-                                                  age_rating=m['mpa_rating'],
-                                                  length=m['runtime'])
-                self.movies.append(movie_object)
+
+            movie_object = movie.create_movie(title=m['title'],
+                                              genres=m['genres'],
+                                              torrents=m['torrents'],
+                                              url=m['url'],
+                                              rating=m['rating'],
+                                              age_rating=m['mpa_rating'],
+                                              length=m['runtime'])
+            self.movies.append(movie_object)
 
     def __init__(self, search_term, page):
         #parameters of url

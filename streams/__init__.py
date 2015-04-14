@@ -5,7 +5,7 @@ SOCKS_PORT = 7000
 PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
            'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
 
-ENABLE_PROXY = True
+ENABLE_PROXY = False
 ###
 
 import stem.process
