@@ -21,13 +21,12 @@ class _Search(object):
 
     Attributes:
         movie_count (int): number of movies returned by the search.
-        results_per_page (int): number of movies per page of the search.
-        page_count (int): number of pages returned by the search.
         movies (list of _Movie): a parsed list of movies returned by the 
                                  search.
+        html_table (string): a HTML table of all results
     """
 
-    def Request(self, parameters):
+    def Request(self, term):
 
         #setup request session
         #requests_session = requesocks.session()
@@ -39,19 +38,15 @@ class _Search(object):
             provider_results = []
 
             try:
-                provider_results = provider.do_search()
+                provider_results = provider.do_search(term)
             except Exception as exc:
                 print exc
                 continue
 
             
-            results
+            results += provider_results
 
-
-
-
-
-
+"""LEGACY
         #start request session
         try:
             request = requests_session.get(url=('https://yts.to/api/v2/'
@@ -62,7 +57,7 @@ class _Search(object):
             print 'Unable to connect to server!'
             raise exc
         return r
-
+"""
     # TODO (robalar): move to provider file
     def parse_data(self, raw_data):
         #read json data
@@ -89,43 +84,47 @@ class _Search(object):
                                               length=m['runtime'])
             self.movies.append(movie_object)
 
-    def __init__(self, search_term, page):
+    def __init__(self, search_term):
         #parameters of url
-        parameters = {'query_term': search_term, 'limit': 50, 'page': page}
+        #parameters = {'query_term': search_term, 'limit': 50, 'page': page}
         #request the first page
-        request = self.Request(parameters)
+        request_data = self.Request(search_term)
         #parse the raw data
-        data = self.parse_data(request)
+        #data = self.parse_data(request)
         #set object varibles
-        self.movie_count = data['movie_count']
-        self.results_per_page = data['limit']
-        self.page_count = int(math.ceil(self.movie_count/self.results_per_page)
-                              + 1)
+        self.movie_count = len(request_data)
+
+        #self.results_per_page = data['limit']
+        #self.page_count = int(math.ceil(self.movie_count/self.results_per_page)
+        #                      + 1)
         #create list of movies
-        self.movies = []
+        self.movies = request_data
         #populate it
-        self.populate_movie_list(data)
+        #self.populate_movie_list(data)
         #print(data['movies'][0])
 
-def search_to_html(search_object):
-    #create base page
-    page = html.HTML()
-    #create table of results
-    html_table = page.table(id='searchResults')
+        #make html table
+        self.search_to_html()
 
-    html_table.thead(id='tableHead')
-    header = html_table.thead.tr()
+    def search_to_html(self):
+        #create base page
+        page = html.HTML()
+        #create table of results
+        html_table = page.table(id='searchResults')
 
-    header.th('Name')
-    header.th('Length')
-    header.th('Rating')
+        html_table.thead(id='tableHead')
+        header = html_table.thead.tr()
 
-    tbody = html_table.tbody()
+        header.th('Name')
+        header.th('Length')
+        header.th('Rating')
 
-    for _movie in search_object.movies:
-        row = tbody.tr()
-        row.td(_movie.title)
-        row.td(str(_movie.length))
-        row.td(_movie.age_rating)
+        tbody = html_table.tbody()
 
-    return str(html_table)
+        for _movie in self.movies:
+            row = tbody.tr()
+            row.td(_movie.title)
+            row.td(str(_movie.length))
+            row.td(_movie.age_rating)
+
+        return str(html_table)
