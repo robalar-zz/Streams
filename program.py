@@ -43,11 +43,8 @@ try:
 
 		#webserver.Init()
 		#main()
-		#s = search.start_search('star wars', 1)
-		#print s.movies[0].torrents[0]
-
-		prov = yts.YTS('YTS', 'www.yts.com')
-		prov.do_search('hey')
+		s = search.start_search('star wars')
+		print s.movies
 		
 finally:
 		if streams.ENABLE_PROXY:
