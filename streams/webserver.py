@@ -28,15 +28,11 @@ class Interface(object):
         return page
 
     @cherrypy.expose
-    def player(self, movieObject, template):
-        #redo
-        stream = mp.Process(target=btclient.main, args={movieObject.torrents[0]['magnet_link']})
-        stream.start()
+    def player(self, title, magnet_link):
 
-        with open(template, 'r') as f:
-            HTML = f.read()
-        HTML = HTML.format(movieObject.title, )
-        return HTML
+        btclient.main([magnet_link, '--http', '--debug-log', 'bt-log.txt'])
+
+        raise cherrypy.HTTPRedirect('http://localhost:5001/Submarine%20(2010)/Submarine.2010.720p.BrRip.x264YIFY.mp4')
         
 
 def launch_browser(url):

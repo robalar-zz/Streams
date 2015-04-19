@@ -8,6 +8,7 @@ from streams.providers import yts
 
 import tabulate
 import os
+import multiprocessing as mp
 
 def main():
 	print('Enter a movie to search for:')
@@ -41,10 +42,12 @@ def main():
 try:
 	if __name__ == '__main__':
 
-		#webserver.Init()
-		#main()
-		#s = search.start_search('star wars')
-		#print s.movies[0].torrents[0].magnet_link
+		webserver.Init()
+
+		#webserver = mp.Process(target=webserver.Init)
+		#webserver.start()
+		#s = search.start_search('submarine')
+		#btclient.main([s.movies[0].torrents[0].magnet_link, '--http', '--debug-log', 'bt-log.txt'])
 
 finally:
 		if streams.ENABLE_PROXY:

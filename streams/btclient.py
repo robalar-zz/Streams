@@ -105,6 +105,7 @@ class BTFileHandler(htserver.BaseHTTPRequestHandler):
             
     def do_HEAD(self, only_header=True):
         parsed_url=urlparse.urlparse(self.path)
+        #logger.debug('/'+self.server.file.path)
         if urllib.unquote_plus(parsed_url.path)=='/'+self.server.file.path:
             self._offset=0
             size,mime = self._file_info()
@@ -118,7 +119,7 @@ class BTFileHandler(htserver.BaseHTTPRequestHandler):
             self.send_resp_header(mime, size, range, only_header)
             return True
         else:
-            logger.error('Requesting wrong path %s, but file is', parsed_url.path, '/'+self.server.file.path)
+            logger.error('Requesting wrong path %s, but file is%s', parsed_url.path, '/'+self.server.file.path)
             self.send_error(404, 'Not Found')
         
     def send_resp_header(self, cont_type, cont_length, range=False, only_header=False):  # @ReservedAssignment
@@ -482,7 +483,7 @@ def print_file(f):
 def main(args=None):
     p=argparse.ArgumentParser()
     p.add_argument("torrent", help="Torrent file, link to file or magnet link")
-    p.add_argument("-d", "--directory", default="movies/", help="directory to save download files")
+    p.add_argument("-d", "--directory", default="", help="directory to save download files")
     p.add_argument("-p", "--player", default="/usr/bin/mplayer", help="Video player executable")
     p.add_argument("-m", "--minimum", default=5.0, type=float, help="Minimum %% of file to be downloaded to start player")
     p.add_argument("--port", type=int, default=5001,help="Port for http server")
@@ -511,8 +512,9 @@ def main(args=None):
             base=args.directory
             sin=False
             logger.debug('File is already downloaded, will play it directly')
+            logger.debug(base)
             args.play_file=True
-        player.start(f,base, stdin=sin)
+        #player.start(f,base, stdin=sin)
         logger.debug('Started media player for %s', f)
         
     c.on_file_ready(start_play)
@@ -521,10 +523,11 @@ def main(args=None):
     while not c.is_file_ready():
         time.sleep(1)
     f=c.file
+    logger.debug(f)
     time.sleep(0.5) # give time for player to start
     while True:
-        if not player.is_playing():
-            break
+        #if not player.is_playing():
+            #break
         if args.http or hasattr(args, 'play_file') and args.play_file:
             time.sleep(1)
         else:

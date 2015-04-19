@@ -7,6 +7,7 @@ import requesocks
 import sys
 import math
 import html
+import urllib
 
 def start_search(search_term):
 
@@ -70,9 +71,12 @@ class _Search(object):
 
         for _movie in movies:
             row = tbody.tr()
+            #row.td(_movie.title)
             row.td(_movie.title)
             row.td(str(_movie.length))
             row.td(_movie.age_rating)
+            link = 'http://localhost:8080/player?title={0}&magnet_link={1}'.format(_movie.title, urllib.quote_plus(_movie.torrents[0].magnet_link))
+            row.td().a('play', href=link)
 
         return str(html_table)
 
