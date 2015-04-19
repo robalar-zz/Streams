@@ -11,7 +11,7 @@ class YTS(providers.GenericProvider):
         providers.GenericProvider.__init__(self, 'YTS', 'https://yts.to/api/v2/list_movies.json')
     
     def do_search(self, search_term):
-        
+        # TODO (robalar): get all pages data
         parameters = {'query_term': search_term, 'limit': 50, 'page': 1}
 
         #get the data
@@ -20,6 +20,11 @@ class YTS(providers.GenericProvider):
 
         #parse
         movie_list = self.parse_data(request)
+
+        #add magnet links
+        for _movie in movie_list:
+            for _torrent in _movie.torrents:
+                _torrent.magnet_link = self._gen_magnet_links(_torrent.hash, _torrent.url)
 
         return movie_list
 
@@ -47,5 +52,14 @@ class YTS(providers.GenericProvider):
             return []
         #strip away unnescicary data and convert to list of movie objects
         return self.create_movie_list(json_data['data'])
+
+    def _gen_magnet_links(self, torrent_hash, torrent_url):
+        trackers = str()
+        for tracker in streams.TRACKERS:
+            trackers += "&tr="+tracker
+
+        link = "magnet:?xt=urn:btih:{0}&dn={1}{2}".format(
+            torrent_hash, torrent_url, trackers)
+        return link
 
 provider = YTS()

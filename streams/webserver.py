@@ -22,9 +22,9 @@ class Interface(object):
 
     @cherrypy.expose
     def search(self, inp):
-        s = search.start_search(inp, 1)
+        s = search.start_search(inp)
         page = self.build_results('public/results.html', inp, 
-                                  search.search_to_html(s))
+                                  s.html_table)
         return page
 
     @cherrypy.expose

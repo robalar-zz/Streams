@@ -1,4 +1,5 @@
 import streams
+from streams import torrent
 
 def create_movie(title, genres, torrents, url, cover_image=None, rating=None,
                  age_rating=None, length=None):
@@ -6,26 +7,21 @@ def create_movie(title, genres, torrents, url, cover_image=None, rating=None,
 
 class _Movie(object):
 
-    def _gen_magnet_links(self, torrent_hash, torrent_url):
-        trackers = str()
-        for tracker in streams.TRACKERS:
-            trackers += "&tr="+tracker
-
-        link = "magnet:?xt=urn:btih:{0}&dn={1}{2}".format(
-            torrent_hash, torrent_url, trackers)
-        return link
-
     def __init__(self, title, genres, torrents, url, cover_image, rating,
                  age_rating, length):
         self.title = title
         self.genres = genres
-        self.torrents = torrents
+        self.torrents = []
         self.url = url
         self.cover_image = cover_image
         self.rating = rating
         self.age_rating = age_rating
         self.length = length
 
-        for torrent in self.torrents:
-            magnet_link = self._gen_magnet_links(torrent['hash'], self.url)
-            torrent['magnet_link'] = magnet_link
+        for t in torrents:
+            _torrent = torrent.create_torrent(peers=t['peers'], hash=t['hash'], url=t['url'], date_uploaded_unix=t['date_uploaded_unix'], magnet_link='', seeds=t['seeds'], size_bytes=t['size_bytes'], quality=t['quality'], date_uploaded=t['date_uploaded'], size=t['size'])
+            
+            self.torrents.append(_torrent)
+
+            #magnet_link = self._gen_magnet_links(t['hash'], self.url)
+            #t['magnet_link'] = magnet_link

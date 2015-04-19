@@ -43,9 +43,9 @@ try:
 
 		#webserver.Init()
 		#main()
-		s = search.start_search('star wars')
-		print s.movies
-		
+		#s = search.start_search('star wars')
+		#print s.movies[0].torrents[0].magnet_link
+
 finally:
 		if streams.ENABLE_PROXY:
 			streams.tor_process.kill()
