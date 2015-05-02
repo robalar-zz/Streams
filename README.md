@@ -6,6 +6,13 @@ A program to search and stream media from torrents.
 2. Do `pip install -r requirements.txt`
 3. Run program.py (`python program.py`)
 
+##Libarys and Projects Used
+[CherryPy](http://www.cherrypy.org/)
+[btclient](https://github.com/izderadicka/btclient)
+[html](https://pypi.python.org/pypi/html/)
+[requesocks](https://pypi.python.org/pypi/requesocks/0.10.8)
+[stem](https://stem.torproject.org/)
+
 ##Bugs/Feature Requests
 Log a issue/idea [here](https://github.com/robalar/Streams/issues) and I'll get round to it.
 
