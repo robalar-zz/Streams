@@ -1,4 +1,4 @@
-# Streams
+# Streams [![Build Status](https://magnum.travis-ci.com/robalar/Streams.svg?token=1j78pQcArktnKA8Vqqqj)](https://magnum.travis-ci.com/robalar/Streams)
 A program to search and stream media from torrents.
 
 ##Installation
