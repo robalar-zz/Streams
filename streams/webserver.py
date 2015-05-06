@@ -1,11 +1,11 @@
 import streams
-from streams import search
+from streams.search import search
 
 import cherrypy
 import os
 import webbrowser
 import multiprocessing as mp
-import btclient
+from streams.streamer import btclient
 
 class Interface(object):
 

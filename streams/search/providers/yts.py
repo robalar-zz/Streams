@@ -1,6 +1,6 @@
 import streams
 from streams import providers
-from streams import movie
+from streams.search import movie
 
 import requesocks
 import json
@@ -11,7 +11,7 @@ class YTS(providers.GenericProvider):
         providers.GenericProvider.__init__(self, 'YTS', 'https://yts.to/api/v2/list_movies.json')
     
     def do_search(self, search_term):
-        # TODO (robalar): get all pages data
+        #TODO (robalar): get all pages data
         parameters = {'query_term': search_term, 'limit': 50, 'page': 1}
 
         #get the data

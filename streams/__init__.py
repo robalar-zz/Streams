@@ -12,6 +12,8 @@ import stem.process
 from stem.util import term
 import os
 
+import streams
+
 FULL_PATH = os.path.abspath(__file__)
 DIRECTORY = os.path.dirname(FULL_PATH)
 
@@ -29,3 +31,7 @@ if ENABLE_PROXY:
     except Exception as e:
         print 'Error starting tor, are you running two instances?'
         raise e
+    
+if __name__ == '__main__':
+    """Run the main program loop here"""
+    pass

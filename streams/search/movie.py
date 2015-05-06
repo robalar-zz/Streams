@@ -1,5 +1,5 @@
 import streams
-from streams import torrent
+from streams.search import torrent
 
 def create_movie(title, genres, torrents, url, cover_image=None, rating=None,
                  age_rating=None, length=None):

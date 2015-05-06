@@ -1,6 +1,10 @@
 import sys
 
+import streams
+from streams.providers import yts
+
 __all__ = ['yts']
+
 
 def provider_list():
 

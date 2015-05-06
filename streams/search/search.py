@@ -1,11 +1,7 @@
 import streams
-from streams import movie
+from streams.search import movie
 from streams import providers
 
-import json
-import requesocks
-import sys
-import math
 import html
 import urllib
 

@@ -18,7 +18,7 @@ import traceback
 from hachoir_metadata import extractMetadata
 from hachoir_parser import createParser
 import hachoir_core.config as hachoir_config
-from reportlab.lib.colors import yellow
+#from reportlab.lib.colors import yellow
 import urllib
 import SocketServer
 hachoir_config.quiet = True
