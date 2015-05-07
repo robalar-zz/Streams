@@ -1,7 +1,6 @@
 import sys
 
-import streams
-from streams.providers import yts
+import yts
 
 __all__ = ['yts']
 
@@ -21,15 +20,4 @@ def getProviderModule(name):
         return sys.modules[prefix + name]
     else:
         raise Exception("Can't find " + prefix + name + " in " + repr(sys.modules))
-
-class GenericProvider(object):
-    """docstring for GenericProvider"""
-    def __init__(self, name, url):
-        self.name = name
-        self.url = url
-
-    def do_search(self, search_term):
-        """To be set in the child class"""
-        print 'Search not implemented in provider {0}'.format(self.name)
-
-        
+            

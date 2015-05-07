@@ -1,22 +1,21 @@
-import streams
-from streams import providers
-from streams.search import movie
+import generic
+from .. import movie
 
 import requesocks
 import json
 
-class YTS(providers.GenericProvider):
+class YTS(generic.GenericProvider):
     """docstring for YTS"""
     def __init__(self):
-        providers.GenericProvider.__init__(self, 'YTS', 'https://yts.to/api/v2/list_movies.json')
+        generic.GenericProvider.__init__(self, 'YTS', 'https://yts.to/api/v2/list_movies.json')
     
-    def do_search(self, search_term):
+    def do_search(self, search_term, proxies):
         #TODO (robalar): get all pages data
         parameters = {'query_term': search_term, 'limit': 50, 'page': 1}
 
         #get the data
         requests_session = requesocks.session()
-        request = requests_session.get(url=self.url, params=parameters, proxies=streams.PROXIES)
+        request = requests_session.get(url=self.url, params=parameters, proxies=proxies)
 
         #parse
         movie_list = self.parse_data(request)

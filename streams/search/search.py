@@ -1,17 +1,6 @@
-import streams
-from streams.search import movie
-from streams import providers
+from . import providers
 
-import html
-import urllib
-
-def start_search(search_term):
-
-    search_object = _Search(search_term)
-
-    return search_object
-
-class _Search(object):
+class Search(object):
 
     """An object to contain all relevent information from a request to the api.
 
@@ -22,7 +11,7 @@ class _Search(object):
         html_table (string): a HTML table of all results
     """
 
-    def Request(self, term):
+    def Request(self, term, proxies):
 
         #setup request session
         #requests_session = requesocks.session()
@@ -34,7 +23,7 @@ class _Search(object):
             provider_results = []
 
             #try:
-            provider_results = provider.do_search(term)
+            provider_results = provider.do_search(term, proxies)
             #except Exception as exc:
                 #print 'Cannont get results from {0}: {1}'.format(provider.name, exc)
                 #raise exc
@@ -76,10 +65,10 @@ class _Search(object):
 
         return str(html_table)
 
-    def __init__(self, search_term):
+    def __init__(self, search_term, proxies):
         #do the search and get movies
-        self.movies = self.Request(search_term)
+        self.movies = self.Request(search_term, proxies)
         #get the number of movies
         self.movie_count = len(self.movies)
         #make html table
-        self.html_table = self.search_to_html(self.movies)
+        #self.html_table = self.search_to_html(self.movies)
