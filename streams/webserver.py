@@ -1,3 +1,5 @@
+"""LEGACY"""
+
 import streams
 from streams.search import search
 
