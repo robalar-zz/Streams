@@ -20,7 +20,7 @@ def print_bootstrap_lines(line):
     if "Bootstrapped " in line:
         print term.format(line, term.Color.BLUE)
 
-if ENABLE_PROXY:
+def start_tor_proxy():
     #start tor
     print term.format('Starting tor', term.Color.BLUE)
     print term.format('proxy: {0}'.format(PROXIES['http']), term.Color.BLUE)
@@ -32,7 +32,3 @@ if ENABLE_PROXY:
     #set enviroment varibles
     os.environ['HTTP_PROXY'] = PROXIES.get('http')
     os.environ['HTTPS_PROXY'] = PROXIES.get('https')
-    
-def main():
-    """Run the main program loop here"""
-    print search.do_search('star wars')
