@@ -1,6 +1,4 @@
 #MOVE TO CONFIG
-TRACKERS = {'udp://open.demonii.com:1337', 'udp://exodus.desync.com:6969',
-            'http://exodus.desync.com:6969/announce'}
 SOCKS_PORT = 7000
 PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
            'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
@@ -31,6 +29,9 @@ if ENABLE_PROXY:
     except Exception as e:
         print 'Error starting tor, are you running two instances?'
         raise e
+    #set enviroment varibles
+    os.environ['HTTP_PROXY'] = PROXIES.get('http')
+    os.environ['HTTPS_PROXY'] = PROXIES.get('https')
     
 def main():
     """Run the main program loop here"""
