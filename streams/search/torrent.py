@@ -1,21 +1,19 @@
-def create_torrent(peers, hash, url, date_uploaded_unix, magnet_link, 
-                   seeds, size_bytes, quality, date_uploaded, size):
-    
-    return _Torrent(peers, hash, url, date_uploaded_unix, magnet_link, 
-                    seeds, size_bytes, quality, date_uploaded, size)
-
-class _Torrent(object):
-    """TODO: Docstring"""
-    def __init__(self, peers, hash, url, date_uploaded_unix, magnet_link, 
-                 seeds, size_bytes, quality, date_uploaded, size):
+class Torrent(object):
+    """Contains all the necessary information on a torrent
         
-        self.peers = peers
-        self.hash = hash
-        self.url = url
-        self.date_uploaded_unix = date_uploaded_unix
+        Attributes:
+            magnet_link (string): the magnet link associated with the torrent
+            quality (string): the video/audio quality of the torrent
+            
+            additional information can be added through kwargs but is not 
+            required ie peers, seeders, leechers
+    """
+    def __init__(self, magnet_link, quality, **kwargs):
+        """Initializes Torrent with the required information and any additional
+           information provided"""
         self.magnet_link = magnet_link
-        self.seeds = seeds
-        self.size_bytes = size_bytes
         self.quality = quality
-        self.date_uploaded = date_uploaded
-        self.size = size
+        self.__dict__.update(kwargs)
+        
+    def __str__(self):
+        return self.magnet_link
