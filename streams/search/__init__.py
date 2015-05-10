@@ -1,17 +1,17 @@
-import providers
+from streams.search import providers
 
-def do(term):
+def do_search(term):
     """Gets movies matching term from all providers
-    
+
     Args:
         term (string): the search term to submit to providers
-    
-    Returns: 
+
+    Returns:
         A list of Movie objects fetched from all providers
     """
     results = []
 
-    for provider in providers.provider_list():
+    for provider in providers.get_provider_list():
 
         provider_results = []
 

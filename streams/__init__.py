@@ -24,6 +24,7 @@ def start_tor_proxy():
     print term.format('Starting tor', term.Color.BLUE)
     print term.format('proxy: {0}'.format(PROXIES['http']), term.Color.BLUE)
     try:
+        #forgive me o Python gods and the mighty PEP8
         global TOR 
         TOR = stem.process.launch_tor_with_config(config={'SocksPort':str(SOCKS_PORT)}, init_msg_handler=print_bootstrap_lines)
     except Exception as e:

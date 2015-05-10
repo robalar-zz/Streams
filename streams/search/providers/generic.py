@@ -4,6 +4,6 @@ class GenericProvider(object):
         self.name = name
         self.url = url
 
-    def do_search(self, search_term, proxies):
+    def do_search(self):
         """To be set in the child class"""
         print 'Search not implemented in provider {0}'.format(self.name)

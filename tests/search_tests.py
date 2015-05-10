@@ -11,16 +11,17 @@ class SearchTest(unittest.TestCase):
     
     @classmethod
     def setup_class(cls):
-        print('Running pre-test setup')        
+        print('Running search pre-test setup')        
         streams.start_tor_proxy()
     
     @classmethod
     def teardown_class(cls):
-        print('tearing down test')
+        print('killing tor')
         streams.kill_tor_proxy()
         
     def test_get_movies(self):
-        s = search.do('star wars')
+        s = search.do_search('star wars')
+        
         assert_equals(type(s), ListType)
         
     def test_torrent(self):

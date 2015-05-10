@@ -1,10 +1,10 @@
 import sys
 
-import yts
+from streams.search.providers import yts
 
 __all__ = ['yts']
 
-def provider_list():
+def get_provider_list():
 
     provider_modules = [get_provider_module(name) for name in __all__]
 
@@ -18,7 +18,5 @@ def get_provider_module(name):
     if name in __all__ and prefix + name in sys.modules:
         return sys.modules[prefix + name]
     else:
-        raise Exception("Can't find " + prefix + name + " in " + repr(sys.modules))
-    
-
-            
+        raise Exception("Can't find " + prefix + name + " in "
+                        + repr(sys.modules))
