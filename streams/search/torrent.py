@@ -4,16 +4,15 @@ class Torrent(object):
         Attributes:
             magnet_link (string): the magnet link associated with the torrent
             quality (string): the video/audio quality of the torrent
-
-            additional information can be added through kwargs but is not
-            required ie peers, seeders, leechers
+            **kwargs (dictionary): additional information i.e peers, seeds
     """
     def __init__(self, magnet_link, quality, **kwargs):
-        """Initializes Torrent with the required information and any additional
+        """Initialises Torrent with the required information and any additional
            information provided"""
         self.magnet_link = magnet_link
         self.quality = quality
         self.__dict__.update(kwargs)
 
     def __str__(self):
+        """Returns magnet link when Torrent is cast to string"""
         return self.magnet_link
