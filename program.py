@@ -1,5 +1,4 @@
 import streams
+import streams.search
 
-if __name__ == '__main__':
-    streams.main()
-    
+s = streams.search.do('star wars')
