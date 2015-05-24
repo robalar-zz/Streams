@@ -12,10 +12,11 @@ import sys
 
 from streams.search.providers import yts
 
+
 __all__ = ['yts']
 
 def get_provider_list():
-
+    """Get all of the providers in __all__"""
     provider_modules = [get_provider_module(name) for name in __all__]
 
     provider_list = [provider.provider for provider in provider_modules]
@@ -23,6 +24,7 @@ def get_provider_list():
     return provider_list
 
 def get_provider_module(name):
+    """get a provider from its filename"""
     name = name.lower()
     prefix = "streams.search.providers."
     if name in __all__ and prefix + name in sys.modules:

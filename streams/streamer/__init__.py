@@ -8,13 +8,14 @@ Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
 
-import libtorrent as lt
-import sys
-import time
 from collections import deque
-
-from streams.search import torrent
+import sys
 import threading
+import time
+
+import libtorrent as lt
+from streams.search import torrent
+
 
 class StreamEngine(object):
     """Object responsible for handling the streaming of files.

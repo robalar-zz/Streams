@@ -16,11 +16,12 @@ PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
 ENABLE_PROXY = True
 ###
 
-import stem.process
-from stem.util import term
 import os
 
+import stem.process
+
 import streams.search
+
 
 FULL_PATH = os.path.abspath(__file__)
 DIRECTORY = os.path.dirname(FULL_PATH)

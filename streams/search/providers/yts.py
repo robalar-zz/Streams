@@ -9,11 +9,13 @@ See LICENCE or opensource.org/licenses/MIT
 """
 
 #TODO (robalar): clean up YTS provider
+import json
+
+import requesocks
+
 from streams.search import movie, torrent
 from streams.search.providers import generic
 
-import requesocks
-import json
 
 class YTS(generic.GenericProvider):
     """Provider module for YTS"""

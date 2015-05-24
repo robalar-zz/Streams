@@ -8,13 +8,15 @@ Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
 
-from nose.tools import assert_equals
-import unittest
 from types import ListType
+import unittest
 
-import streams
+from nose.tools import assert_equals
+
 from streams import search
+import streams
 from streams.search import torrent, movie
+
 
 class SearchTest(unittest.TestCase):
 

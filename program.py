@@ -8,8 +8,9 @@ Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
 
-import streams.search
 from streams import streamer
+import streams.search
+
 
 try:
     streams.start_tor_proxy()
