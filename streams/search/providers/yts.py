@@ -1,3 +1,14 @@
+"""
+Author: robalar <rbthales@gmail.com>
+URL: github.com/Streams
+
+This file is part of streams
+
+Streams is free software, and is distributed under the MIT licence.
+See LICENCE or opensource.org/licenses/MIT
+"""
+
+#TODO (robalar): clean up YTS provider
 from streams.search import movie, torrent
 from streams.search.providers import generic
 
@@ -71,4 +82,5 @@ class YTS(generic.GenericProvider):
             _torrent['magnet_link'] = self._gen_magnet_links(_torrent['hash'], _torrent['url'])
                 
         return torrents
+
 provider = YTS()

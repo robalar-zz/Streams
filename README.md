@@ -15,6 +15,8 @@ A program to search and stream media from torrents.
 ##Bugs/Feature Requests
 Log a issue/idea [here](https://github.com/robalar/Streams/issues) and I'll get round to it.
 
+##Licence
+MIT (see LICENCE)
+
 ##Notes
-Built with Python 2.7.6 on Ubuntu 14.04 LTS 64-bit.
-Using Google Python style guide (rev 2.59) https://google-styleguide.googlecode.com/svn/trunk/pyguide.html
+Using [Google Python style guide (rev 2.59)](https://google-styleguide.googlecode.com/svn/trunk/pyguide.html)
