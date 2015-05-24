@@ -14,6 +14,8 @@ PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
            'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
 
 ENABLE_PROXY = True
+
+MEDIA_DIR = './files'
 ###
 
 import os
