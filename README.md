@@ -8,7 +8,6 @@ A program to search and stream media from torrents.
 
 ##Libarys and Projects Used
 * [CherryPy](http://www.cherrypy.org/)
-* [btclient](https://github.com/izderadicka/btclient)
 * [html](https://pypi.python.org/pypi/html/)
 * [requesocks](https://pypi.python.org/pypi/requesocks/0.10.8)
 * [stem](https://stem.torproject.org/)

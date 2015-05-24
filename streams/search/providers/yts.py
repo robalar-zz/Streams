@@ -1,20 +1,20 @@
-import generic
-from .. import movie
-from .. import torrent
+from streams.search import movie, torrent
+from streams.search.providers import generic
 
 import requesocks
 import json
 
 class YTS(generic.GenericProvider):
-    
+    """Provider module for YTS"""
+
     trackers = {'udp://open.demonii.com:1337', 'udp://exodus.desync.com:6969',
-            'http://exodus.desync.com:6969/announce'}
-    
-    """docstring for YTS"""
+                'http://exodus.desync.com:6969/announce'}
+
     def __init__(self):
         """"""
-        generic.GenericProvider.__init__(self, 'YTS', 'https://yts.to/api/v2/list_movies.json')
-    
+        super(YTS, self).__init__('YTS', 
+                                  'https://yts.to/api/v2/list_movies.json')
+
     def do_search(self, search_term):
         """TODO (robalar): docstring"""
         #TODO (robalar): get all pages data
@@ -29,9 +29,8 @@ class YTS(generic.GenericProvider):
         
         #convert list to Torrent object
         for _movie in movie_list:
-            for _torrent in _movie.torrents:
-                _torrent = torrent.Torrent(**_torrent)
-        
+            _movie.torrents[:] = [torrent.Torrent(**_torrent) for _torrent in _movie.torrents]
+
         return movie_list
 
     def create_movie_list(self, data):
