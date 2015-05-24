@@ -10,7 +10,7 @@ See LICENCE or opensource.org/licenses/MIT
 
 class GenericProvider(object):
     """A generic provider which must be inherited by all other providers
-        
+
         All methods here must be overloaded for the provider to function
         properly
 

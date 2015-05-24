@@ -9,7 +9,7 @@ See LICENCE or opensource.org/licenses/MIT
 """
 
 class Torrent(object):
-    """Contains all the necessary information on a torrent
+    """Contains all the necessary information on a torrent.
 
         Attributes:
             magnet_link (string): the magnet link associated with the torrent

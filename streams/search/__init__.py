@@ -11,7 +11,7 @@ See LICENCE or opensource.org/licenses/MIT
 from streams.search import providers
 
 def do_search(term):
-    """Gets movies matching term from all providers
+    """Gets movies matching term from all providers.
 
     Args:
         term (string): the search term to submit to providers
