@@ -15,6 +15,7 @@ import requesocks
 
 from streams.search import movie, torrent
 from streams.search.providers import generic
+import math
 
 
 class YTS(generic.GenericProvider):
@@ -24,21 +25,37 @@ class YTS(generic.GenericProvider):
                 'http://exodus.desync.com:6969/announce'}
 
     def __init__(self):
-        """"""
+        """Initialises the provider with the YTS url"""
         super(YTS, self).__init__('YTS', 
                                   'https://yts.to/api/v2/list_movies.json')
 
     def do_search(self, search_term):
-        """TODO (robalar): docstring"""
-        #TODO (robalar): get all pages data
-        parameters = {'query_term': search_term, 'limit': 50, 'page': 1}
+        """Gets all pages of data from YTS"""
+        limit = 50
+        parameters = {'query_term': search_term, 'limit': limit, 'page': 1}
 
         #get the data
         requests_session = requesocks.session()
         request = requests_session.get(url=self.url, params=parameters)
 
-        #parse
-        movie_list = self.parse_data(request)
+        data = json.loads(request.text)
+        if data['status'] == 'error':
+            return []
+        data = data['data']
+        
+        current_page = data['page_number']
+        movie_count = data['movie_count']
+        page_count = math.ceil(float(movie_count)/float(limit))
+        
+        movie_list = self.create_movie_list(data)
+        
+        while current_page < page_count:
+            parameters['page'] += 1
+            request = requests_session.get(url=self.url, params=parameters)
+            _data = json.loads(request.text)
+            _data = _data['data']
+            current_page = _data['page_number']
+            movie_list += self.create_movie_list(_data)
         
         #convert list to Torrent object
         for _movie in movie_list:
@@ -61,15 +78,6 @@ class YTS(generic.GenericProvider):
                 movie_list.append(movie_object)
         return movie_list
 
-    def parse_data(self, raw_data):
-        #read json data
-        json_data = json.loads(raw_data.text)
-        #see if search was sucsessful
-        if json_data['status'] == 'error':
-            return []
-        #strip away unnescicary data and convert to list of movie objects
-        return self.create_movie_list(json_data['data'])
-
     def _gen_magnet_links(self, torrent_hash, torrent_url):
         trackers = str()
         for tracker in self.trackers:
@@ -86,3 +94,4 @@ class YTS(generic.GenericProvider):
         return torrents
 
 provider = YTS()
+

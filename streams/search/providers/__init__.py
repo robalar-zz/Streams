@@ -13,7 +13,7 @@ import sys
 from streams.search.providers import yts
 
 
-__all__ = ['yts', 'local']
+__all__ = ['yts']
 
 def get_provider_list():
     """Get all of the providers in __all__"""

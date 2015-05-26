@@ -28,7 +28,7 @@ class StreamEngine(object):
            stream_thread (Thread): the tread the torrent download will be on
            handle (object): the torrent handle for the download
     """
-    def __init__(self, params):
+    def __init__(self, params={}):
         """Sets up required variables to stream"""
         self.lt_ses = lt.session()
         self.lt_ses.listen_on(6881, 6891)
@@ -82,7 +82,7 @@ class StreamEngine(object):
             print 'getting meta-data'
             time.sleep(0.1)
 
-        self.handle.rename_file(0, 'test.mp4')
+        #self.handle.rename_file(0, 'test.mp4')
 
         while not self.handle.is_seed():
             stat = self.handle.status()

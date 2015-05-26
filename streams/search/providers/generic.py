@@ -23,6 +23,6 @@ class GenericProvider(object):
         self.name = name
         self.url = url
 
-    def do_search(self):
+    def do_search(self, search_term):
         """Contains the search logic of the provider"""
         print 'Search not implemented in provider {0}'.format(self.name)
