@@ -18,7 +18,7 @@ A program to search and stream media from torrents.
 [stem](https://stem.torproject.org/)
 
 ##Bugs/Feature Requests
-Log a issue/idea [here](https://github.com/robalar/Streams/issues) and I'll get round to it.
+Log a issue/idea [here](https://github.com/robalar/Streams/issues) and I'll get round to it. See what I'm currently working on [here](https://waffle.io/robalar/streams)
 
 ##Notes
 Built with Python 2.7.6 on Ubuntu 14.04 LTS 64-bit.
