@@ -9,7 +9,9 @@ See LICENCE or opensource.org/licenses/MIT
 """
 
 from streams.search import providers
+import logging
 
+logger = logging.getLogger(__name__)
 
 def do_search(term):
     """Gets movies matching term from all providers.
@@ -21,15 +23,16 @@ def do_search(term):
         A list of Movie objects fetched from all providers
     """
     results = []
-
+    
     for provider in providers.get_provider_list():
 
         provider_results = []
 
         try:
+            logger.info('Searching {0} for \'{1}\''.format(provider.name, term))
             provider_results = provider.do_search(term)
         except Exception as exc:
-            print 'Cannot get results from {0}: {1}'.format(provider.name, exc)
+            logger.warning('Could not get results from {0}: {1}'.format(provider.name, exc))
             continue
 
         results += provider_results

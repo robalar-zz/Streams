@@ -8,6 +8,10 @@ Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 class GenericProvider(object):
     """A generic provider which must be inherited by all other providers.
 
@@ -25,4 +29,4 @@ class GenericProvider(object):
 
     def do_search(self, search_term):
         """Contains the search logic of the provider"""
-        print 'Search not implemented in provider {0}'.format(self.name)
+        logger.warning('Search not implemented in provider {0}'.format(self.name))

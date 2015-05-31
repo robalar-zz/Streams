@@ -15,7 +15,9 @@ import time
 
 import libtorrent as lt
 from streams.search import torrent
+import logging
 
+logger = logging.getLogger(__name__)
 
 class StreamEngine(object):
     """Object responsible for handling the streaming of files.
@@ -78,8 +80,8 @@ class StreamEngine(object):
 
     def _stream(self):
         """Internal method to handle stream"""
+        logger.info('getting meta-data')
         while not self.handle.has_metadata():
-            print 'getting meta-data'
             time.sleep(0.1)
 
         #self.handle.rename_file(0, 'test.mp4')

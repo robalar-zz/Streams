@@ -63,6 +63,7 @@ target/
 #Directories created by program
 movies/
 config/
+files/
 *.mp4
 *.cover
 bt-log.txt
