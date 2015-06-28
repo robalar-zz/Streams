@@ -16,6 +16,7 @@ import time
 import libtorrent as lt
 from streams.search import torrent
 import logging
+from libtorrent import proxy_settings
 
 logger = logging.getLogger(__name__)
 
@@ -33,8 +34,12 @@ class StreamEngine(object):
     def __init__(self, params={}):
         """Sets up required variables to stream"""
         self.lt_ses = lt.session()
-        self.lt_ses.listen_on(6881, 6891)
-
+        self.lt_ses.listen_on(51413, 51423)
+        self.proxy_settings = lt.proxy_settings()
+        self.proxy_settings.hostname = 'localhost'
+        self.proxy_settings.port = 7000
+        self.proxy_settings.type = lt.proxy_type.socks5
+        
         self.params = params
         self.queue = deque()
         self.stream_thread = None
@@ -43,6 +48,7 @@ class StreamEngine(object):
     def add_torrent_to_queue(self, torr):
         """Add a torrent to be streamed to the end of the queue"""
         if isinstance(torr, torrent.Torrent):
+            logger.info('Added {0}'.format(torr))
             self.queue.append(torr)
         else:
             raise TypeError('{0} was not a valid torrent'.format(torr))
@@ -80,7 +86,7 @@ class StreamEngine(object):
 
     def _stream(self):
         """Internal method to handle stream"""
-        logger.info('getting meta-data')
+        logger.info('getting meta-data...')
         while not self.handle.has_metadata():
             time.sleep(0.1)
 
@@ -88,8 +94,8 @@ class StreamEngine(object):
 
         while not self.handle.is_seed():
             stat = self.handle.status()
-
             print 'downloading %.2f%%'%(stat.progress * 100)
-            sys.stdout.flush()
+            print 'peers {}'.format(stat.num_peers)
 
             time.sleep(1)
+        
