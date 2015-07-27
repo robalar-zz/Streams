@@ -7,8 +7,6 @@ A program to search and stream media from torrents.
 3. Run program.py (`python program.py`)
 
 ##Libarys and Projects Used
-* [CherryPy](http://www.cherrypy.org/)
-* [html](https://pypi.python.org/pypi/html/)
 * [requesocks](https://pypi.python.org/pypi/requesocks/0.10.8)
 * [stem](https://stem.torproject.org/)
 
