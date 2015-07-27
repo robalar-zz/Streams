@@ -44,6 +44,7 @@ DIRECTORY = os.path.dirname(FULL_PATH)
 def load_config():
     pass
 
+#Move proxy stuff?
 def start_tor_proxy():
     """Start the tor proxy on the preselected ports"""
     #start tor

@@ -32,7 +32,7 @@ class StreamEngine(object):
     """
     def __init__(self, params={}):
         """Sets up required variables to stream"""
-        self.lt_ses = lt.session()
+        self.lt_ses = lt.session() # pylint: disable=no-member
         self.lt_ses.listen_on(6881, 6891)
 
         self.params = params
@@ -63,7 +63,7 @@ class StreamEngine(object):
         """starts a stream of the first torrent in the queue on the
             stream_thread"""
         self.handle = lt.add_magnet_uri(self.lt_ses, self.queue[0].magnet_link,
-                                        self.params)
+                                        self.params) # pylint: disable=no-member
         self.handle.set_sequential_download(True)
 
         self.stream_thread = threading.Thread(target=self._stream,
