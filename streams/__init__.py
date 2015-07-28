@@ -12,13 +12,22 @@ See LICENCE or opensource.org/licenses/MIT
 SOCKS_PORT = 7000
 PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
            'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
-EXCLUDE_EXIT_NODES = ['gb']
+EXCLUDE_EXIT_NODES = '{gb}'
 ENABLE_PROXY = True
 
 MEDIA_DIR = './files'
 
-DEBUG = False
+DEBUG = True
 ###
+
+#Monkey patching the DNS requests through tor. Move to seperate module?
+from lib import socks
+import socket
+orginal_socket = socket.socket
+
+def getaddrinfo(*args):
+    return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
+socket.getaddrinfo = getaddrinfo
 
 import os
 import logging
@@ -52,7 +61,7 @@ def start_tor_proxy():
     logger.info('proxy: {0}'.format(PROXIES['http']))
     try:
         global TOR  # forgive me o Python gods and the mighty PEP8
-        TOR = stem.process.launch_tor_with_config(config={'SocksPort':str(SOCKS_PORT), 'ExcludeExitNodes': EXCLUDE_EXIT_NODES})
+        TOR = stem.process.launch_tor_with_config(config={'SocksPort':str(SOCKS_PORT), 'ExcludeNodes': EXCLUDE_EXIT_NODES, 'ControlPort':'9051'})
     except Exception as exc:
         logger.error('Error starting tor, are you running two instances?')
         raise exc
