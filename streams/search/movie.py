@@ -17,14 +17,13 @@ class Movie(object):
         Attributes:
             title (string): the title of the movie
             torrents (list of Torrent): the torrents available for the movie
-            **kwargs (dictionary): additional information i.e genres, rating
     """
-    def __init__(self, title, torrents, **kwargs):
+    def __init__(self, title, torrents):
         """Initializes Movie with the required information and any additional
            information provided"""
         self.title = title
         self.torrents = torrents
-        self.__dict__.update(kwargs)
+        self.__dict__.update(self.get_imdb_info())
 
     def __str__(self):
         """Returns title of movie when Movie is cast to a string"""

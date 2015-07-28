@@ -69,12 +69,7 @@ class YTS(generic.GenericProvider):
             if m['state'] == 'DMCA Removed':
                 pass
             else:                
-                movie_object = movie.Movie(title=m['title'], genres=m['genres'],
-                                           torrents=self.add_magnet_links(m['torrents']),
-                                           url=m['url'],
-                                           rating=m['rating'],
-                                           age_rating=m['mpa_rating'],
-                                           length=m['runtime'])
+                movie_object = movie.Movie(title=m['title'], torrents=self.add_magnet_links(m['torrents']))
                 movie_list.append(movie_object)
         return movie_list
 
