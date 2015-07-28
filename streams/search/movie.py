@@ -7,6 +7,9 @@ This file is part of streams
 Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
+import requesocks
+import urllib
+import json
 
 class Movie(object):
     """Contains all the necessary information on a movie.
@@ -30,3 +33,9 @@ class Movie(object):
     def __iter__(self):
         """When called in a loop iterates over torrents"""
         return iter(self.torrents)
+    
+    def get_imdb_info(self):
+        quoted_title = urllib.quote_plus(self.title)
+        request = requesocks.get('http://www.omdbapi.com/?t={0}&y=&plot=short&r=json'.format(quoted_title))
+        data = json.loads(request.text)
+        return data
