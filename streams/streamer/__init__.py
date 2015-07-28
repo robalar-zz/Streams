@@ -13,7 +13,7 @@ import sys
 import threading
 import time
 
-from lib import libtorrent as lt
+import libtorrent as lt
 from streams.search import torrent
 import logging
 
