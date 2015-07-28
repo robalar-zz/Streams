@@ -29,7 +29,7 @@ This module provides a standard socket-like interface for Python
 for tunneling connections through SOCKS proxies.
 
 """
-
+# pylint: skip-file
 import socket
 import struct
 

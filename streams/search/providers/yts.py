@@ -8,7 +8,6 @@ Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
 
-#TODO (robalar): clean up YTS provider
 import json
 
 import requesocks
@@ -37,10 +36,13 @@ class YTS(generic.GenericProvider):
         #get the data
         requests_session = requesocks.session()
         request = requests_session.get(url=self.url, params=parameters)
-
-        data = json.loads(request.text)
+        
+        #make data manipulatable
+        data = json.loads(request.text) # pylint: disable=maybe-no-member
+        #Check to see if query was successful
         if data['status'] == 'error':
             return []
+        #Strip away the status messages
         data = data['data']
         
         current_page = data['page_number']
@@ -52,7 +54,7 @@ class YTS(generic.GenericProvider):
         while current_page < page_count:
             parameters['page'] += 1
             request = requests_session.get(url=self.url, params=parameters)
-            _data = json.loads(request.text)
+            _data = json.loads(request.text) # pylint: disable=maybe-no-member
             _data = _data['data']
             current_page = _data['page_number']
             movie_list += self.create_movie_list(_data)

@@ -19,8 +19,8 @@ class Movie(object):
             torrents (list of Torrent): the torrents available for the movie
     """
     def __init__(self, title, torrents):
-        """Initializes Movie with the required information and any additional
-           information provided"""
+        """Initializes Movie with the required information and adds information
+           provided by IMDB"""
         self.title = title
         self.torrents = torrents
         self.__dict__.update(self.get_imdb_info())
