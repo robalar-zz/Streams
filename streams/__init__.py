@@ -9,25 +9,11 @@ See LICENCE or opensource.org/licenses/MIT
 """
 
 #MOVE TO CONFIG
-SOCKS_PORT = 7000
-PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
-           'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
-EXCLUDE_EXIT_NODES = '{gb}'
-ENABLE_PROXY = True
 
 MEDIA_DIR = './files'
 
 DEBUG = True
 ###
-
-#Monkey patching the DNS requests through tor. Move to seperate module?
-from lib import socks
-import socket
-orginal_socket = socket.socket
-
-def getaddrinfo(*args):
-    return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
-socket.getaddrinfo = getaddrinfo
 
 import os
 import logging
@@ -53,29 +39,4 @@ DIRECTORY = os.path.dirname(FULL_PATH)
 def load_config():
     pass
 
-#Move proxy stuff?
-def start_tor_proxy():
-    """Start the tor proxy on the preselected ports"""
-    #start tor
-    logger.info('Starting tor')
-    logger.info('proxy: {0}'.format(PROXIES['http']))
-    try:
-        global TOR  # forgive me o Python gods and the mighty PEP8
-        TOR = stem.process.launch_tor_with_config(config={'SocksPort':str(SOCKS_PORT), 'ExcludeNodes': EXCLUDE_EXIT_NODES, 'ControlPort':'9051'})
-    except Exception as exc:
-        logger.error('Error starting tor, are you running two instances?')
-        raise exc
-    
-    #set enviroment varibles which requests will use for all traffic
-    os.environ['HTTP_PROXY'] = PROXIES.get('http')  #Fix monkey patching?
-    os.environ['HTTPS_PROXY'] = PROXIES.get('https')
-    
-    #get ip and location info
-    ip_info = json.loads(requesocks.get('http://ip-api.com/json').text)
-    logger.info('IP address: {0}'.format(ip_info['query']))
-    logger.info('Location: {0}'.format(ip_info['country']))
 
-def kill_tor_proxy():
-    """Kill the tor proxy"""
-    logger.info('Killing tor')
-    TOR.kill()
