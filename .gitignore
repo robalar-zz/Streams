@@ -67,3 +67,4 @@ bt-log.txt
 .project
 .pydevproject
 .settings
+tor/
