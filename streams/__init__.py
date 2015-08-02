@@ -20,8 +20,7 @@ import logging
 import stem.process
 import requesocks
 import json
-
-import streams.search
+import platform
 
 if DEBUG:
     logging_level = logging.DEBUG
@@ -33,10 +32,10 @@ logging.basicConfig(format='%(asctime)s|%(levelname)s|%(message)s', datefmt='%I:
 
 logger = logging.getLogger(__name__)
 
-FULL_PATH = os.path.abspath(__file__)
+FULL_PATH = os.path.abspath(__file__).strip('__init__.pyc')
 DIRECTORY = os.path.dirname(FULL_PATH)
 
-def load_config():
-    pass
+PLATFORM = platform.system()
+logger.info('Running on {0}'.format(PLATFORM))
 
 
