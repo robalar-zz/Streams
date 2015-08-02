@@ -15,7 +15,7 @@ import json
 import requesocks
 import os
 import platform
-import time
+import subprocess
 
 import streams
 
@@ -39,10 +39,16 @@ class TorProxy(object):
     def __init__(self):
         """Start the tor proxy & get ip info"""
 
-        #FIXME: Check if tor already in path
-        if streams.PLATFORM == 'Windows':
-            os.environ["PATH"] += os.pathsep + self.TOR_PATH
-
+        #is tor in the path?
+        try:
+            subprocess.call('tor --version')
+        except OSError:        
+            if streams.PLATFORM == 'Windows':
+                os.environ["PATH"] += os.pathsep + self.TOR_PATH
+            if streams.PLATFORM.startswith('linux'):
+                logger.error('Please install tor with your distributions\
+                              package mangager or from source')
+            
         #start tor
         logger.info('Starting tor')
         logger.info('proxy: {0}'.format(self.PROXIES['http']))
