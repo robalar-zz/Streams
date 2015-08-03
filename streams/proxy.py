@@ -7,6 +7,14 @@ This file is part of streams
 Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
+from lib import socks
+import socket
+orginal_socket = socket.socket
+
+def getaddrinfo(*args):
+    return [(socket.AF_INET, socket.SOCK_STREAM, 6, '', (args[0], args[1]))]
+socket.getaddrinfo = getaddrinfo
+
 
 import stem
 import stem.control
@@ -28,7 +36,7 @@ class TorProxy(object):
     CONTROL_PORT = 9051
     PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
            'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
-    EXCLUDE_EXIT_NODES = ['{gb}']
+    EXCLUDE_EXIT_NODES = ['{gb}', '{usa}']
     
     def __init__(self):
         """Start the tor proxy & get ip info"""
@@ -50,8 +58,7 @@ class TorProxy(object):
 
         tor_cfg = {'SocksPort':str(self.SOCKS_PORT),
                    'ExcludeNodes': self.EXCLUDE_EXIT_NODES,
-                   'ControlPort':str(self.CONTROL_PORT),
-                   'DNSPort':str(self.SOCKS_PORT)}
+                   'ControlPort':str(self.CONTROL_PORT)}
         
         try:
             self.proc = stem.process.launch_tor_with_config(config=tor_cfg,
