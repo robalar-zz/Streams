@@ -14,6 +14,7 @@ import requesocks
 
 from streams.search import movie, torrent
 from streams.search.providers import generic
+import streams
 import math
 
 
@@ -33,8 +34,10 @@ class YTS(generic.GenericProvider):
         limit = 50
         parameters = {'query_term': search_term, 'limit': limit, 'page': 1}
 
-        #get the data
+        #set up session
         requests_session = requesocks.session()
+        requests_session.proxies = streams.PROXIES
+        #get the data
         request = requests_session.get(url=self.url, params=parameters)
         
         #make data manipulatable

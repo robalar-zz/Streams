@@ -21,6 +21,7 @@ import stem.process
 import requesocks
 import json
 import platform
+from glob import glob
 
 if DEBUG:
     logging_level = logging.DEBUG
@@ -32,8 +33,10 @@ logging.basicConfig(format='%(asctime)s|%(levelname)s|%(message)s', datefmt='%I:
 
 logger = logging.getLogger(__name__)
 
-FULL_PATH = os.path.abspath(__file__).strip('__init__.pyc')
+FULL_PATH = os.path.abspath(glob('./')[0])
 DIRECTORY = os.path.dirname(FULL_PATH)
+
+PROXIES = {}
 
 PLATFORM = platform.system()
 logger.info('Running on {0}'.format(PLATFORM))

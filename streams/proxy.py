@@ -21,15 +21,9 @@ import streams
 
 logger = logging.getLogger(__name__)
 
-def log_ip_info():
-    #get ip and location info
-    ip_info = json.loads(requesocks.get('http://ip-api.com/json').text)
-    logger.info('IP address: {0}'.format(ip_info['query']))
-    logger.info('Location: {0}'.format(ip_info['country']))
-
 class TorProxy(object):
 
-    TOR_PATH = streams.FULL_PATH + 'tor\\Tor'
+    TOR_PATH = streams.FULL_PATH + '\\tor\\Tor'
     SOCKS_PORT = 7000
     CONTROL_PORT = 9051
     PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
@@ -42,9 +36,10 @@ class TorProxy(object):
         #is tor in the path?
         try:
             subprocess.call('tor --version')
-        except OSError:        
+        except OSError:
             if streams.PLATFORM == 'Windows':
                 os.environ["PATH"] += os.pathsep + self.TOR_PATH
+                print os.environ["PATH"]
             if streams.PLATFORM.startswith('linux'):
                 logger.error('Please install tor with your distributions\
                               package mangager or from source')
@@ -65,18 +60,14 @@ class TorProxy(object):
             logger.error('Error starting tor, are you running two instances?')
             raise exc
 
-        #TODO (robalar): Fix monkey patching
-        #set enviroment varibles which requests will use for all traffic
-        os.environ['HTTP_PROXY'] = self.PROXIES.get('http')
-        os.environ['HTTPS_PROXY'] = self.PROXIES.get('https')
-
         #getting tor controller
         self.controller = stem.control.Controller.from_port(port=
                                                             self.CONTROL_PORT)
         self.controller.authenticate()
-        
-        log_ip_info()
-    
+
+        streams.PROXIES = self.PROXIES
+
+        log_ip_info()    
     
     def new_identity(self):
         #Only gets new identity if tor will accept
@@ -94,4 +85,12 @@ class TorProxy(object):
         self.proc.kill()
 
    
+def log_ip_info():
+    #get ip and location info
+    print streams.PROXIES
+    ip_info = json.loads(requesocks.get('http://ip-api.com/json',
+                                        proxies=streams.PROXIES).text)
+    logger.info('IP address: {0}'.format(ip_info['query']))
+    logger.info('Location: {0}'.format(ip_info['country']))
+
         
