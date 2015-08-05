@@ -37,7 +37,10 @@ class TorProxy(object):
         """Start the tor proxy & get ip info"""
 
         #Add config file varibles
-        self.__dict__.update(streams.load_cfg('tor.cfg')
+        self.__dict__.update(streams.read_cfg('tor.cfg'))
+
+        proxy =  ''.join([self.PROXY_URL, ':', str(self.SOCKS_PORT)])
+        self.PROXIES = {'http': proxy, 'https': proxy}
         
         #is tor in the path?
         try:
