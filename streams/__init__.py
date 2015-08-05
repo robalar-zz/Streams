@@ -50,18 +50,31 @@ def get_cfg(cfg):
 
     if not os.path.isfile(cfg_path):
         logger.warning('Config file {0} doesn\'t exist! Skipping'.format(cfg))
-        return {}
+        return None
 
+    return cfg_path
+
+def read_cfg(cfg):
+
+    cfg_path = get_cfg(cfg)
+    
     try:
         with open(cfg_path) as cfg_file:
             data = json.load(cfg_file)
     except ValueError:
         logger.warning('Error in the {0}! Skipping'.format(cfg))
-        return {}
+        return 
 
     return data
 
-def write_cfg():
-    pass
+def write_cfg(cfg, dictonary):
+    
+    cfg_data = read_cfg(cfg)
+    
+    cfg_data.update(dictonary)
 
+    with open(get_cfg(cfg), 'r+') as cfg_file:
+        json.dump(cfg_data, cfg_file, indent=3)
+
+    
 
