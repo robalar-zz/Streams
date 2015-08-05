@@ -36,7 +36,7 @@ class TorProxy(object):
     CONTROL_PORT = 9051
     PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
            'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
-    EXCLUDE_EXIT_NODES = ['{gb}', '{usa}']
+    EXCLUDE_EXIT_NODES = ['{gb}', '{us}']
     
     def __init__(self):
         """Start the tor proxy & get ip info"""
