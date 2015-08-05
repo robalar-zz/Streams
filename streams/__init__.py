@@ -56,13 +56,11 @@ def get_cfg(cfg):
 
 def read_cfg(cfg):
 
-    cfg_path = get_cfg(cfg)
-    
     try:
-        with open(cfg_path) as cfg_file:
+        with open(get_cfg(cfg)) as cfg_file:
             data = json.load(cfg_file)
     except ValueError:
-        logger.warning('Error in the {0}! Skipping'.format(cfg))
+        logger.warning('Error in {0}! Skipping'.format(cfg))
         return 
 
     return data
