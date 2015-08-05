@@ -33,12 +33,35 @@ logging.basicConfig(format='%(asctime)s|%(levelname)s|%(message)s', datefmt='%I:
 
 logger = logging.getLogger(__name__)
 
-FULL_PATH = os.path.abspath(glob('./')[0])
-DIRECTORY = os.path.dirname(FULL_PATH)
+DIRECTORY = os.path.dirname(__file__)
+FULL_PATH = os.path.abspath(DIRECTORY)
+DATA_DIR = os.path.join(FULL_PATH, 'data')
 
 PROXIES = {}
 
 PLATFORM = platform.system()
 logger.info('Running on {0}'.format(PLATFORM))
+
+print DIRECTORY, FULL_PATH
+
+def get_cfg(cfg):
+
+    cfg_path = os.path.join(DATA_DIR, cfg) 
+
+    if not os.path.isfile(cfg_path):
+        logger.warning('Config file {0} doesn\'t exist! Skipping'.format(cfg))
+        return {}
+
+    try:
+        with open(cfg_path) as cfg_file:
+            data = json.load(cfg_file)
+    except ValueError:
+        logger.warning('Error in the {0}! Skipping'.format(cfg))
+        return {}
+
+    return data
+
+def write_cfg():
+    pass
 
 

@@ -32,15 +32,13 @@ logger = logging.getLogger(__name__)
 class TorProxy(object):
 
     TOR_PATH = streams.FULL_PATH + '\\tor\\Tor'
-    SOCKS_PORT = 7000
-    CONTROL_PORT = 9051
-    PROXIES = {'http': 'socks5://localhost:{0}'.format(SOCKS_PORT),
-           'https': 'socks5://localhost:{0}'.format(SOCKS_PORT)}
-    EXCLUDE_EXIT_NODES = ['{gb}', '{us}']
     
     def __init__(self):
         """Start the tor proxy & get ip info"""
 
+        #Add config file varibles
+        self.__dict__.update(streams.load_cfg('tor.cfg')
+        
         #is tor in the path?
         try:
             subprocess.call('tor --version')
@@ -48,7 +46,7 @@ class TorProxy(object):
             if streams.PLATFORM == 'Windows':
                 os.environ["PATH"] += os.pathsep + self.TOR_PATH
                 print os.environ["PATH"]
-            if streams.PLATFORM.startswith('linux'):
+            if streams.PLATFORM.startswith('Linux'):
                 logger.error('Please install tor with your distributions\
                               package mangager or from source')
             
