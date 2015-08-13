@@ -52,8 +52,7 @@ class SearchTest(unittest.TestCase):
         torrent1 = torrent.Torrent('magnet:?xt=urn:sha1:YNCKHTQCWBTRNJIV4WNAE',
                                    '1080p')
         torrent2 = torrent.Torrent('magnet:?xt=urn:sha1:E52SJUQCZO5C', '720p')
-        m = movie.Movie('Montage of Heck', [torrent1, torrent2],
-                        genre='documentary', rating='PG-13')
+        m = movie.Movie('Montage of Heck', [torrent1, torrent2])
         for t in m:
             assert_equals(type(t), torrent.Torrent)
         assert_equals(m.title, 'Montage of Heck')
@@ -61,5 +60,5 @@ class SearchTest(unittest.TestCase):
         assert_equals(m.torrents[0], torrent1)
         assert_equals(m.torrents[1], torrent2)
 
-        assert_equals(m.genre, 'documentary')
-        assert_equals(m.rating, 'PG-13')
+        assert_equals(m.imdbID, 'tt4229236')
+        assert_equals(m.Rated, 'TV-MA')
