@@ -26,18 +26,16 @@ class SearchTest(unittest.TestCase):
     @classmethod
     def setup_class(cls):
         logger.info('Running search pre-test setup')
-        streams.start_tor_proxy()
+       # streams.start_tor_proxy()
 
     @classmethod
     def teardown_class(cls):
         logger.info('Running post-test teardown')
-        streams.kill_tor_proxy()
+       # streams.kill_tor_proxy()
 
     def test_get_movies(self):
-        #FIXME (robalar): find a way to do this without tor
-        #s = search.do_search('star wars')
-        #assert_equals(type(s), ListType)
-        pass
+        s = search.do_search('star wars')
+        assert_equals(type(s), ListType)
         
     def test_torrent(self):
         t = torrent.Torrent('magnet:?xt=urn:sha1:YNCKHTQCWBTRNJIV4WNAE',
