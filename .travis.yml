@@ -13,7 +13,9 @@ before_install:
   - sudo apt-get install -y tor
 
 # command to install dependencies
-install: "pip install -r requirements.txt"
+install:
+  - "pip install coverage"
+  - "pip install -r requirements.txt"
 # command to run tests
 script: 
   - nosetests -s -v --with-coverage
