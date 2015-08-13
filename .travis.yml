@@ -1,19 +1,22 @@
 language: python
 python:
   - "2.7"
-sudo: false
+  
+# allow the program to use libtorrent
+virtualenv:
+  system_site_packages: true
+
 # install libtorrent & tor
-addons:
-  apt:
-    packages:
-      - python-libtorrent
-      - tor
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y python-libtorrent
+  - sudo apt-get install -y tor
+
 # command to install dependencies
 install: "pip install -r requirements.txt"
 # command to run tests
 script: 
   - nosetests -s -v --with-coverage
-before_install:
-  pip install codecov
+
 after_success:
   codecov
