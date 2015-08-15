@@ -1,4 +1,4 @@
-# Streams [![Build Status](https://travis-ci.org/robalar/Streams.svg)](https://travis-ci.org/robalar/Streams) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/robalar/Streams/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/robalar/Streams/?branch=master)
+# Streams [![Build Status](https://travis-ci.org/robalar/Streams.svg)](https://travis-ci.org/robalar/Streams) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/robalar/Streams/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/robalar/Streams/?branch=master) [![Coverage Status](https://coveralls.io/repos/robalar/Streams/badge.svg?branch=master&service=github)](https://coveralls.io/github/robalar/Streams?branch=master)
 A program to search and stream media from torrents.
 
 ##Installation
