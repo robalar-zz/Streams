@@ -8,7 +8,7 @@ Streams is free software, and is distributed under the MIT licence.
 See LICENCE or opensource.org/licenses/MIT
 """
 
-#MOVE TO CONFIG
+# MOVE TO CONFIG
 
 MEDIA_DIR = './files'
 
@@ -21,15 +21,16 @@ import stem.process
 import requesocks
 import json
 import platform
-from glob import glob
+import streams.proxy
 
 if DEBUG:
     logging_level = logging.DEBUG
 else:
     logging_level = logging.INFO
     
-#e.g 10:48:02 PM 27/07/2015|ERROR|test
-logging.basicConfig(format='%(asctime)s|%(levelname)s|%(message)s', datefmt='%I:%M:%S %p %d/%m/%Y',level=logging_level)
+# e.g 10:48:02 PM 27/07/2015|ERROR|test
+logging.basicConfig(format='%(asctime)s|%(name)s|%(levelname)s|%(message)s', datefmt='%I:%M:%S %p %d/%m/%Y',
+                    level=logging_level)
 
 logger = logging.getLogger(__name__)
 
@@ -42,37 +43,32 @@ PROXIES = {}
 PLATFORM = platform.system()
 logger.info('Running on {0}'.format(PLATFORM))
 
-print DIRECTORY, FULL_PATH
 
-def get_cfg(cfg):
-
-    cfg_path = os.path.join(DATA_DIR, cfg) 
-
-    if not os.path.isfile(cfg_path):
-        logger.warning('Config file {0} doesn\'t exist! Skipping'.format(cfg))
-        return None
-
-    return cfg_path
-
-def read_cfg(cfg):
-
-    try:
-        with open(get_cfg(cfg)) as cfg_file:
-            data = json.load(cfg_file)
-    except ValueError:
-        logger.warning('Error in {0}! Skipping'.format(cfg))
-        return 
-
-    return data
-
-def write_cfg(cfg, dictonary):
+class Main(object):
     
-    cfg_data = read_cfg(cfg)
+    RUNNING = True
     
-    cfg_data.update(dictonary)
-
-    with open(get_cfg(cfg), 'r+') as cfg_file:
-        json.dump(cfg_data, cfg_file, indent=3)
-
+    @classmethod
+    def startup(cls):
+        cls.tor = streams.proxy.TorProxy()
     
+    @classmethod
+    def shutdown(cls):
+        cls.tor.kill()
+    
+    @classmethod
+    def main(cls):
+        while cls.RUNNING:
+            import pdb; pdb.set_trace()
 
+    @classmethod
+    def close(cls):
+        cls.RUNNING = False
+
+def run():
+    
+    Main.startup()
+    
+    Main.main()
+
+    Main.shutdown()

@@ -70,3 +70,4 @@ bt-log.txt
 tor/
 program.dist/
 .externalToolBuilders/
+.idea/
